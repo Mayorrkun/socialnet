@@ -13,9 +13,9 @@ class UserAuthController extends Controller
     //
     public function show(){
         $categories = Category::pluck("title");
-        
+        $user = Auth::user();
        //dd($categories);
-        return view("welcome",compact("categories"));
+        return view("welcome",compact(["categories","user"]));
     }
 
     public function showLogin(){
@@ -42,7 +42,7 @@ class UserAuthController extends Controller
             }
             else{
                Auth::login($user);
-               return redirect('User.welcome');
+               return redirect()->route('home', compact('user'));
             }
         }
 
@@ -53,6 +53,7 @@ class UserAuthController extends Controller
     }
     public function logout(){
         Auth::logout();
+        return redirect()->route('home');
     }
 
     public function Register(){
@@ -91,7 +92,18 @@ class UserAuthController extends Controller
         else{
            // dd('lol no you have no users yet');
            return redirect()->route('login-page');       }
+        }
+
+        public function add_to_cart(){
+            $user = Auth::user();
+
+            
+
+        }
+
+
     }
-}
+
+
         
 

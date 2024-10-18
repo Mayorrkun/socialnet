@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Cart;
 
 class User extends Authenticatable
 {
@@ -16,12 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['first_name','last_name','email','password'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,4 +41,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected static function boot(){
+
+        parent::boot();
+        
+        static::created(function ($user){
+            if(!$user->carts()->where('status','active')->exists()){
+                Cart::create([
+                    'user_id'=> $user->id,
+                    'status' => 'active'
+                ]);
+            }
+        });
+    }
+
+    public function carts(){
+        return $this->hasMany(Cart::class);
+    }
+
 }

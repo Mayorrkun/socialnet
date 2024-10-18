@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->foreignIdFor(Category::class,'category_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('img_path');
             $table->decimal('price',10,2)->default(0);
             $table->decimal('discount',10,2)->default(0);
             $table->integer('stock')->default(0);
+
             
 
             $table->timestamps();

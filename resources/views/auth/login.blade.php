@@ -1,7 +1,7 @@
 <x-layout>
     <main class="min-w-full min-h-[80%] shadow-md mt-5">
         <div class="h-10 flex">
-            <span class="font-bold text-gray-900 text-2xl mx-auto ">LOGO HERE</span>
+            <a href="{{route('home')}}" class="font-bold text-gray-900 text-2xl mx-auto ">LOGO HERE</a>
         </div>
         <form action="/login" method="POST" class="shadow-md w-[25%] mx-auto mt-5 border-[1.5px] border-gray-200 rounded-lg flex-col flex ">
             @csrf

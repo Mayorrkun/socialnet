@@ -1,47 +1,71 @@
-@props(['categories'])
+@props(['categories', 'user'])
 
-<nav class="flex flex-row w-full h-16 bg-gray-700" x-data="{categories:}" x-init="categories = JSON.parse('{{json_encode($categories)}}')">
+<nav class="flex flex-row w-full h-14 py-[1px] bg-gray-900" x-data="{categories:}" x-init="categories = JSON.parse('{{json_encode($categories)}}')">
     <div class="w-[15%] h-full flex flex-row">
-        <div>
+        <a href="{{route('home')}}" class="w-[60%] h-auto my-auto text-lg font-bold text-white">
+                LOGO HERE   
 
-        </div>
-        <div>
+        </a>
+        <div class="w-35% ml-auto text-sm">
+            <span> deliver to: </span>
+
 
         </div>
     </div>
 
-    <div class="w-[50%] h-full pl-10 ml-5 flex" >
+    <div class="w-[50%] h-full ml-5 flex" >
         <form action="/search" method="POST" class="my-auto mr-auto h-[90%]">
             @csrf
             <div class="h-full flex ">
-                 <select name="category" class="bg-gray-300 w-auto min-h-[70%] ml-auto my-auto rounded-l-md  text-black text-xs">
+                 <select name="category" class="bg-gray-300 w-auto min-h-[85%] ml-auto my-auto rounded-l-md  text-black text-xs">
                     <option>All</option>
                     <template x-for="(category,index) in categories" :key="index">
                         <option :value="category" x-text="category" class=""></option>    
                     </template>
                  </select>
-                <input type="text" class="w-[80%] min-h-[70%] my-auto">
-                <button for="" type="submit" class="rounded-r-md w-[6.5%] min-h-[70%] my-auto bg-slate-500"><img src="/images/search.png" alt="search" srcset="" class="w-[50%] h-[50%] m-auto"></button>
+                <input type="text" class="w-[90%] min-h-[85%] my-auto">
+                <button for="" type="submit" class="rounded-r-md w-[6.5%] min-h-[85%] my-auto bg-slate-500"><img src="/images/search.png" alt="search" srcset="" class="w-[50%] h-[50%] m-auto"></button>
             </div>
                 </form>
         
     </div>
-    <div class="w-[35%] min-h-90% my-auto ml-auto flex justify-evenly">
+    <div class="w-[40%] min-h-90% my-auto ml-auto flex justify-evenly">
         {{-- 4 divs innit --}}
-        <div class="w-[20%] flex  hover:border-white hover:border-2 hover:rounded-sm "></div>
-        <div class="w-[20%] flex  hover:border-white hover:border-2 hover:rounded-sm "></div>
-        <div class="w-[20%] flex  hover:border-white hover:border-2 hover:rounded-sm "></div>
-        <div class="w-[20%] flex  hover:border-white hover:border-2 hover:rounded-sm p-1 border-2 border-transparent rounded-sm ">
-            <a href="/cart"  class="flex flex-row ">
+        <div class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm "></div>
+        <div x-data="{ isHovered: false }"  class="w-[30%] flex flex-col  hover:border-white hover:border hover:rounded--sm p-1 border border-transparent rounded-sm ">
+            @auth
+            <span class=" text-white font-semibold text-sm min-h-5 max-w-full" >Hello {{$user->first_name}} </span>
+            <span @mouseenter="isHovered = true" 
+            @mouseleave="isHovered = false"  class=" text-white font-bold text-md max-h-6 max-w-full"
+            >Account & Lists</span>
+            
+            
+            @endauth
+            @guest
+                <a href="{{route('login-page')}}" class=" text-white font-semibold text-sm max-h-5 max-w-full">
+                    Hello, sign in
+                </a>
+                <span @mouseenter="isHovered = true" 
+                @mouseleave="isHovered = false"  class=" text-white font-bold text-md max-h-6 max-w-full"
+                >Account & Lists</span>
+                <x-hidden-div x-show="isHovered" :user="$user" @mouseenter="isHovered = true" 
+                @mouseleave="isHovered = false" > 
+                </x-hidden-div>
+
+            @endguest
+        </div>
+        <div class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm "></div>
+        <a href="{{route('cart')}}" class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm p-1 border border-transparent rounded-sm ">
+            <span  class="flex flex-row ">
 
                 <img src="images/cart.png" alt="cart" srcset="" class="mt-auto w-[80%] h-[80%]">
 
                 <span class="font-bold text-orange-400 text-xl w-[20px] pt-2">0 </span>
-            </a>
+            </span>
             <span class="font-bold text-md min-h-5 mt-auto text-white  ">
                 Cart
             </span>
-        </div>
+        </a>
         
     </div>
 
