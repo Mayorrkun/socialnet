@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['first_name','last_name','email','password'];
+    protected $fillable = ['first_name','last_name','email','password','cart_id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,16 +48,21 @@ class User extends Authenticatable
         
         static::created(function ($user){
             if(!$user->carts()->where('status','active')->exists()){
-                Cart::create([
+               $cart = Cart::create([
                     'user_id'=> $user->id,
                     'status' => 'active'
                 ]);
+
+            // $cart = Cart::where('user_id', $user->id)->first();
+
+            $user->update(["cart_id"=> $cart->id]);
             }
+            
         });
     }
 
     public function carts(){
-        return $this->hasMany(Cart::class);
+        return $this->hasOne(Cart::where("status" ,"active"));
     }
 
 }

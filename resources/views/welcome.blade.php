@@ -7,6 +7,13 @@
             </div>
         </nav>
 
+         {{-- @foreach ($products as $product)
+         <div>
+
+         </div>
+             
+         @endforeach --}}
+
 
     </main>
 

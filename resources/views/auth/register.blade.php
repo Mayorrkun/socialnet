@@ -34,7 +34,7 @@
 
            
 
-            <button type="submit" for="" class="w-[80%] mx-auto h-8 bg-yellow-400 text-white font-bold mb-10 mt-5 rounded-md">Login</button>
+            <button type="submit" for="" class="w-[80%] mx-auto h-8 bg-yellow-400 text-white font-bold mb-10 mt-5 rounded-md">Submit</button>
             
             <p class="w-[80%] mx-auto text-xs mb-10">
                 By continuing that means you must have agreed to our <a class="text-blue-600" href="#">terms of use and service.</a> 

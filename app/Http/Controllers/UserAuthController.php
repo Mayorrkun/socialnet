@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,9 @@ class UserAuthController extends Controller
     public function show(){
         $categories = Category::pluck("title");
         $user = Auth::user();
+        $products = Product::all();
        //dd($categories);
-        return view("welcome",compact(["categories","user"]));
+        return view("welcome",compact(["categories","user","products"]));
     }
 
     public function showLogin(){
@@ -30,9 +32,13 @@ class UserAuthController extends Controller
             'password'=> ['required'],
         ]);
         $user = User::where('email',$validated_attributes['email'])->first();
+
+        if($user == null){
+            return back()->withErrors(["email"=> 'user does not exist']);
+        }
         $password = Hash::check($validated_attributes['password'],$user->password);
 
-        $validated_attributes['password'] = $password;
+        //$validated_attributes['password'] = $password;
        
 
       
@@ -40,6 +46,7 @@ class UserAuthController extends Controller
             if($password !== true){
                 return back()->withErrors(["password"=> 'wrong password']);
             }
+
             else{
                Auth::login($user);
                return redirect()->route('home', compact('user'));
