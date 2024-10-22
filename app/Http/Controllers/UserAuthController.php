@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Pagination\Paginator;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +17,7 @@ class UserAuthController extends Controller
     public function show(){
         $categories = Category::pluck("title");
         $user = Auth::user();
-        $products = Product::all();
+        $products = Product::paginate(5);
        //dd($categories);
         return view("welcome",compact(["categories","user","products"]));
     }
