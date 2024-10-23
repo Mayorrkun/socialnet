@@ -8,11 +8,10 @@
         </nav>
         @foreach ($products as $product)
 
-        <div class="w-36 h-36 mr-3 mt-3
+        <a href="{{route('product-page',$product->id)}}" class="w-36 h-36 mr-3 mt-3
          rounded border border-gray-500">
-
-
-        </div>
+         <img src="{{asset($product->img_path)}}" alt="img">
+    </a>
             
         @endforeach
 

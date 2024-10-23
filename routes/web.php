@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserCartController;
@@ -12,3 +12,6 @@ Route::get('/register-page',[UserAuthController::class,'showRegister'])->name('r
 Route::post('/login',[UserAuthController::class,'Login'])->name('login');
 Route::get('/logout',[UserAuthController::class,'logout'])->name('logout');
 Route::post('/register',[UserAuthController::class,'Register'])->name('register');
+
+Route::get('/products/{id}',[ProductController::class,'show'])->name('product-page');
+Route::post('/cart/add/{productId}', [UserCartController::class, 'addToCart']);
