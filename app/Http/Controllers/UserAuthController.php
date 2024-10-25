@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItems;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -18,8 +19,13 @@ class UserAuthController extends Controller
         $categories = Category::pluck("title");
         $user = Auth::user();
         $products = Product::paginate(5);
-       //dd($categories);
-        return view("welcome",compact(["categories","user","products"]));
+        $items = 0;
+        if($user){
+            $items = CartItems::where('cart_id',$user->cart_id)->count();
+        }
+        
+         //dd($categories); 
+        return view("welcome",compact(["categories","user","products","items"]));
     }
 
     public function showLogin(){
@@ -51,6 +57,7 @@ class UserAuthController extends Controller
 
             else{
                Auth::login($user);
+               
                return redirect()->route('home', compact('user'));
             }
         }

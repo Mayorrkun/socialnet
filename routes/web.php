@@ -14,4 +14,4 @@ Route::get('/logout',[UserAuthController::class,'logout'])->name('logout');
 Route::post('/register',[UserAuthController::class,'Register'])->name('register');
 
 Route::get('/products/{id}',[ProductController::class,'show'])->name('product-page');
-Route::post('/cart/add/{productId}', [UserCartController::class, 'addToCart']);
+Route::post('/cart/add/{productId}', [UserCartController::class, 'add_to_cart'])->name('add-to-cart');

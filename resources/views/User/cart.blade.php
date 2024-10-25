@@ -1,5 +1,5 @@
 <x-layout>
-    <x-navbar :user="$user" :categories="$categories">  </x-navbar>
+    <x-navbar :user="$user" :categories="$categories" :items="$items">  </x-navbar>
 <main>
 
 </main>

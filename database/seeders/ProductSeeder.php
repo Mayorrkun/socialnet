@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
         Product::create([
             'name' => 'PlayStation 5 console',
             'description' => 'This is the playstation 5 yadayada',
@@ -24,5 +24,16 @@ class ProductSeeder extends Seeder
             'discount' => 0.00,
             'stock' => 50,
         ]);
+        Product::create([
+            'name' => 'Nintendo Switch Oled Console',
+            'description' => 'This is the Nintendo Switch yadayada',
+            'category_id' => Category::where('title','Consoles')->first()->id,
+            'img_path' => 'images/products/nintendo-switch.png',
+            'price' => 499.0,
+            'discount' => 5.00,
+            'stock' => 100,
+        ]);
+
+        
     }
 }

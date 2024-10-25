@@ -16,9 +16,10 @@ class UserCartController extends Controller
         Auth::check();
         $user = Auth::user();
         $categories = Category::pluck("title");
+        $items = CartItems::where('cart_id',$user->cart_id)->count();
         if ($user){
 
-            return view('user.cart',compact('user','categories'));
+            return view('user.cart',compact('user','categories','items'));
 
         }
 
@@ -58,6 +59,10 @@ class UserCartController extends Controller
                         'message' => 'Product added to cart successfully',
                         'cart_id' => $cart->id,]);
 
+            }
+
+            else{
+                return redirect()->route('login-page');
             }
 
             

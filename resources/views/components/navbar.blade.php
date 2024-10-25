@@ -1,4 +1,4 @@
-@props(['categories', 'user'])
+@props(['categories', 'user','items'])
 
 <nav class="flex flex-row w-full h-14 py-[1px] bg-gray-900" x-data="{categories:}" x-init="categories = JSON.parse('{{json_encode($categories)}}')">
     <div class="w-[15%] h-full flex flex-row">
@@ -60,7 +60,14 @@
 
                 <img src="images/cart.png" alt="cart" srcset="" class="mt-auto w-[80%] h-[80%]">
 
-                <span class="font-bold text-orange-400 text-xl w-[20px] pt-2">0 </span>
+                @guest
+                <span class="font-bold text-orange-400 text-xl w-[20px] pt-2">0 </span>        
+                @endguest
+
+                @auth
+                <span class="font-bold text-orange-400 text-xl w-[20px] pt-2">{{$items}}</span> 
+                @endauth
+
             </span>
             <span class="font-bold text-md min-h-5 mt-auto text-white  ">
                 Cart
