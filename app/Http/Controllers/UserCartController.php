@@ -16,10 +16,15 @@ class UserCartController extends Controller
         Auth::check();
         $user = Auth::user();
         $categories = Category::pluck("title");
-        $items = CartItems::where('cart_id',$user->cart_id)->count();
-        if ($user){
+      
 
-            return view('user.cart',compact('user','categories','items'));
+        if ($user){
+                 $items = CartItems::where('cart_id',$user->cart_id)->count();
+                 $carts = CartItems::where('cart_id',$user->cart_id)->paginate(10);
+           foreach($carts as $cart){
+                dd(Product::where('id',$cart->product_id)->get());
+           }
+               // return view('user.cart',compact('user','categories','items','carts'));
 
         }
 
@@ -51,13 +56,11 @@ class UserCartController extends Controller
                             'cart_id' => $cart->id,
                             'product_id' => $product->id,
                             'quantity' => $quantity,
-                            'price'=> $product->price
+                            'price'=>$product->price - ($product->price *$product->discount)/100
                         ]);
                     }
                 
-                    return response()->json([
-                        'message' => 'Product added to cart successfully',
-                        'cart_id' => $cart->id,]);
+                    return redirect()->route('home');
 
             }
 

@@ -50,10 +50,8 @@ class User extends Authenticatable
             if(!$user->carts()->where('status','active')->exists()){
                $cart = Cart::create([
                     'user_id'=> $user->id,
-                    'status' => 'active'
+                    'status' => 'active',
                 ]);
-
-            // $cart = Cart::where('user_id', $user->id)->first();
 
             $user->update(["cart_id"=> $cart->id]);
             }
@@ -62,7 +60,8 @@ class User extends Authenticatable
     }
 
     public function carts(){
-        return $this->hasOne(Cart::where("status" ,"active"));
+       // dd($this);
+        return $this->hasOne(Cart::class);
     }
 
 }
