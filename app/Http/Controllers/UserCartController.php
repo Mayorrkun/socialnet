@@ -18,13 +18,14 @@ class UserCartController extends Controller
         $categories = Category::pluck("title");
       
 
-        if ($user){
+        if ($user->cart){
                  $items = CartItems::where('cart_id',$user->cart_id)->count();
-                 $carts = CartItems::where('cart_id',$user->cart_id)->paginate(10);
-           foreach($carts as $cart){
-                dd(Product::where('id',$cart->product_id)->get());
-           }
-               // return view('user.cart',compact('user','categories','items','carts'));
+                 // Retrieve the user's cart items along with product details
+                $cartItems = CartItems::with('product')
+                ->where('cart_id', $user->cart->id)
+                ->paginate(10);
+
+          return view('user.cart',compact('user','categories','items','cartItems'));
 
         }
 
@@ -72,4 +73,14 @@ class UserCartController extends Controller
 
         }
 
+        public function remove_from_cart($productId){
+            $user = Auth::user();
+            $product = Product::findOrFail($productId);
+
+            if ($user->cart){
+                $cartItem = CartItems::where('product_id',$productId)->where('cart_id',$user->cart_id)->first();
+                
+
+            }
+                }
 }

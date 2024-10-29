@@ -59,7 +59,7 @@ class User extends Authenticatable
         });
     }
 
-    public function carts(){
+    public function cart(){
        // dd($this);
         return $this->hasOne(Cart::class);
     }

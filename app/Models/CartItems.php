@@ -12,11 +12,11 @@ class CartItems extends Model
     protected $fillable = ['cart_id','product_id','quantity','price'];
 
     public function cart(){
-        $this->belongsToMany(Cart::class);
+       return  $this->belongsToMany(Cart::class);
     }
 
-    public function products(){
-        $this->hasMany(Product::class);
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id');
     }
 
 }
