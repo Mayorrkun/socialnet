@@ -78,9 +78,43 @@ class UserCartController extends Controller
             $product = Product::findOrFail($productId);
 
             if ($user->cart){
-                $cartItem = CartItems::where('product_id',$productId)->where('cart_id',$user->cart_id)->first();
-                
+                $cartItem = CartItems::where('product_id',$product->id)->where('cart_id',$user->cart_id)->first();
 
+                if($cartItem){
+                    $cartItem->delete();
+                    // return response()->json(['message' => 'Product removed from cart successfully.']);
+                    return redirect()->route('cart');
+                }
             }
                 }
+
+            public function increase($productId,){
+                $user = Auth::user();
+                $product = Product::findOrFail($productId);
+                if($user->cart){
+                    $cartItem =CartItems::where('product_id', $product->id)->where('cart_id',$user->cart_id)->first();
+                    $cartItem->quantity += 1;
+                    $cartItem->save();
+                    return redirect()->route('cart');
+                }
+            }
+            public function decrease($productId,){
+                $user = Auth::user();
+                $product = Product::findOrFail($productId);
+                if($user->cart){
+                    $cartItem =CartItems::where('product_id', $product->id)->where('cart_id',$user->cart_id)->first();
+                    if($cartItem->quantity > 1){
+                    $cartItem->quantity -= 1;
+                    $cartItem->save();
+                    return redirect()->route('cart');
+                    }
+                    elseif($cartItem->quantity === 1){
+                        $cartItem->delete();
+                        return redirect()->route('cart');
+                    }
+
+                }
+            }
+
+
 }

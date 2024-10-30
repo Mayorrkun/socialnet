@@ -15,3 +15,6 @@ Route::post('/register',[UserAuthController::class,'Register'])->name('register'
 
 Route::get('/products/{id}',[ProductController::class,'show'])->name('product-page');
 Route::post('/cart/add/{productId}', [UserCartController::class, 'add_to_cart'])->name('add-to-cart');
+Route::get('/cart/remove/{productId}',[UserCartController::class, 'remove_from_cart'])->name('remove-from-cart');
+Route::get('/cart/increase/{productId}',[UserCartController::class, 'increase'])->name('increase');
+Route::get('/cart/decrease/{productId}',[UserCartController::class, 'decrease'])->name('decrease');

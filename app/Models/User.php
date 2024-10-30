@@ -47,7 +47,7 @@ class User extends Authenticatable
         parent::boot();
         
         static::created(function ($user){
-            if(!$user->carts()->where('status','active')->exists()){
+            if(!$user->cart()->where('status','active')->exists()){
                $cart = Cart::create([
                     'user_id'=> $user->id,
                     'status' => 'active',

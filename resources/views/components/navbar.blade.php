@@ -31,30 +31,30 @@
     </div>
     <div class="w-[40%] min-h-90% my-auto ml-auto flex justify-evenly">
         {{-- 4 divs innit --}}
-        <div class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm "></div>
-        <div x-data="{ isHovered: false }"  class="w-[30%] flex flex-col  hover:border-white hover:border hover:rounded--sm p-1 border border-transparent rounded-sm ">
+        <div class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm ">
+        </div>
+        <div x-data="{ isHovered: false }"  class="max-w-[30%] flex flex-col  max-h-full  hover:border-white hover:border hover:rounded--sm p-1 border border-transparent rounded-sm ">
             @auth
-            <span class=" text-white font-semibold text-sm min-h-5 max-w-full" >Hello {{$user->first_name}} </span>
+            <span class=" text-white font-semibold text-sm max-h-5 max-w-full" >Hello {{$user->first_name}} </span>
             <span @mouseenter="isHovered = true" 
-            @mouseleave="isHovered = false"  class=" text-white font-bold text-md max-h-6 max-w-full"
-            >Account & Lists</span>
-            
-            
+             class=" text-white font-bold text-md max-h-6 max-w-full"
+            >Account & Lists</span>        
             @endauth
             @guest
                 <a href="{{route('login-page')}}" class=" text-white font-semibold text-sm max-h-5 max-w-full">
                     Hello, sign in
                 </a>
                 <span @mouseenter="isHovered = true" 
-                @mouseleave="isHovered = false"  class=" text-white font-bold text-md max-h-6 max-w-full"
+                  class=" text-white font-bold text-md max-h-6 max-w-full"
                 >Account & Lists</span>
-                <x-hidden-div x-show="isHovered" :user="$user" @mouseenter="isHovered = true" 
-                @mouseleave="isHovered = false" > 
-                </x-hidden-div>
-
             @endguest
+            <x-hidden-div x-show="isHovered" :user="$user" @mouseenter="isHovered = true" 
+            @mouseleave="isHovered = false" > 
+            </x-hidden-div> 
         </div>
+
         <div class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm "></div>
+        
         <a href="{{route('cart')}}" class="w-[20%] flex  hover:border-white hover:border hover:rounded--sm p-1 border border-transparent rounded-sm ">
             <span  class="flex flex-row ">
 
@@ -74,6 +74,6 @@
             </span>
         </a>
         
-    </div>
+         </div>
 
 </nav>
